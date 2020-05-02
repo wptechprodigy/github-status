@@ -3,33 +3,33 @@ import requestPromise from 'request-promise';
 import Operation from './Operation';
 
 function Operations() {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false);
+	const [data, setData] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
 
 	useEffect(() => {
-    const requestServiceStatus = async () => {
-      setIsLoading(true);
-      setIsError(false);
+		const requestServiceStatus = async () => {
+			setIsLoading(true);
+			setIsError(false);
 
-      const options = {
+			const options = {
 				uri: 'https://www.githubstatus.com/',
 				json: true,
-      };
+			};
 
-      try {
-        const response = await requestPromise(options);
+			try {
+				const response = await requestPromise(options);
 
-        setData(response.components);
-      } catch (error) {
-        setIsError(true);
-      }
+				setData(response.components);
+			} catch (error) {
+				setIsError(true);
+			}
 
-      setIsLoading(false);
-    }
+			setIsLoading(false);
+		};
 
-    requestServiceStatus();
-  }, []);
+		requestServiceStatus();
+	}, []);
 
 	return (
 		<div className='flex flex-col m-8 md:flex flex-grow'>
@@ -45,7 +45,9 @@ function Operations() {
 			{isLoading ? (
 				<h1 className='text-center font-black text-3xl'>Loading...</h1>
 			) : (
-				data.map(({id, ...restData }) => <Operation key={id} restData={restData} />)
+				data.map(({ id, ...restData }) => (
+					<Operation key={id} restData={restData} />
+				))
 			)}
 		</div>
 	);
